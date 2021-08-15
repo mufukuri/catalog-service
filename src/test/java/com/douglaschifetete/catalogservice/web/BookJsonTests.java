@@ -10,17 +10,16 @@ import java.time.Year;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 @JsonTest
-public class BookJsonTests {
+class BookJsonTests {
 
     @Autowired
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private JacksonTester<Book> json;
-
 
     @Test
     void testSerialize() throws Exception {
-        Book book = new Book("1234567890", "Title", "Author", Year.of(1973), 9.90);
+        Book book = new Book("1234567890", "Title", "Author", Year.of(1973), 9.90, "Polar");
         assertThat(json.write(book)).extractingJsonPathStringValue("@.isbn")
                 .isEqualTo("1234567890");
         assertThat(json.write(book)).extractingJsonPathStringValue("@.title")
@@ -31,13 +30,16 @@ public class BookJsonTests {
                 .isEqualTo("1973");
         assertThat(json.write(book)).extractingJsonPathNumberValue("@.price")
                 .isEqualTo(9.90);
+        assertThat(json.write(book)).extractingJsonPathStringValue("@.publisher")
+                .isEqualTo("Polar");
     }
 
     @Test
     void testDeserialize() throws Exception {
-        String content = "{\"isbn\":\"1234567890\",\"title\":\"Title\", \"author\":\"Author\", \"publishingYear\":\"1973\", \"price\":9.90}";
+        String content = "{\"isbn\":\"1234567890\",\"title\":\"Title\", \"author\":\"Author\", \"publishingYear\":\"1973\", \"price\":9.90, \"publisher\":\"Polar\"}";
         assertThat(json.parse(content))
-                .usingRecursiveComparison().isEqualTo(new Book("1234567890", "Title", "Author", Year.of(1973), 9.90));
+                .usingRecursiveComparison()
+                .isEqualTo(new Book("1234567890", "Title", "Author", Year.of(1973), 9.90, "Polar"));
         assertThat(json.parseObject(content).getIsbn()).isEqualTo("1234567890");
     }
 }

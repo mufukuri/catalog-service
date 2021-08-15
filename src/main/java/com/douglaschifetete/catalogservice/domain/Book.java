@@ -1,10 +1,11 @@
 package com.douglaschifetete.catalogservice.domain;
 
+import com.douglaschifetete.catalogservice.persistence.PersistableEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import com.douglaschifetete.catalogservice.persistence.PersistableEntity;
+
 import javax.persistence.Entity;
 import javax.validation.constraints.*;
 import java.time.Year;
@@ -31,4 +32,6 @@ public class Book extends PersistableEntity {
     @NotNull(message = "The book price must be defined.")
     @Positive(message = "The book price must be greater than zero.")
     private Double price;
+
+    private String publisher;
 }
