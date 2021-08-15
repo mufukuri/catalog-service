@@ -1,14 +1,19 @@
 package com.douglaschifetete.catalogservice.domain;
 
-import java.time.Year;
-import javax.validation.constraints.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import com.douglaschifetete.catalogservice.persistence.PersistableEntity;
+import javax.persistence.Entity;
+import javax.validation.constraints.*;
+import java.time.Year;
 
-@Data
-@AllArgsConstructor
-public class Book {
+@Entity
+@Data @AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class Book extends PersistableEntity {
 
     @NotBlank(message = "The book ISBN must be defined.")
     @Pattern(regexp = "^(97([89]))?\\d{9}(\\d|X)$", message = "The ISBN format must follow the standards ISBN-10 or ISBN-13.")

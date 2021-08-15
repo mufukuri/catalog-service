@@ -1,14 +1,16 @@
 package com.douglaschifetete.catalogservice.repository;
 
-import com.douglaschifetete.catalogservice.domain.Book;
 
-import java.util.Collection;
+import com.douglaschifetete.catalogservice.domain.Book;
+import org.springframework.data.repository.CrudRepository;
+
+import javax.transaction.Transactional;
 import java.util.Optional;
 
-public interface BookRepository {
-    Collection<Book> findAll();
+public interface BookRepository
+        extends CrudRepository<Book,Long> {
     Optional<Book> findByIsbn(String isbn);
     boolean existsByIsbn(String isbn);
-    Book save(Book book);
+    @Transactional
     void deleteByIsbn(String isbn);
 }

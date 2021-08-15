@@ -2,9 +2,6 @@ package com.douglaschifetete.catalogservice.service;
 
 
 
-import java.util.Collection;
-import java.util.Optional;
-
 import com.douglaschifetete.catalogservice.domain.Book;
 import com.douglaschifetete.catalogservice.exceptions.BookAlreadyExistsException;
 import com.douglaschifetete.catalogservice.exceptions.BookNotFoundException;
@@ -12,13 +9,16 @@ import com.douglaschifetete.catalogservice.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
 
-    public Collection<Book> viewBookList() {
-        return bookRepository.findAll();
+    public Iterable<Book> viewBookList() {
+        return (Collection<Book>) bookRepository.findAll();
     }
 
     public Book viewBookDetails(String isbn) {
